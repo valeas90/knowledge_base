@@ -37,3 +37,13 @@ curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.p
 python3.7 -m pip install pip
 sudo update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
 
+# Instalar Docker
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+apt-cache policy docker-ce
+sudo apt install docker-ce
+sudo systemctl status docker
+sudo usermod -aG docker ${USER}
+su - ${USER}
+id -nG
