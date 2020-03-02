@@ -45,6 +45,27 @@ su - ${USER}
 
 id -nG
 
+# Instalar pyenv (omitir entonces el resto de secciones inferiores)
+sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
+libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+
+curl https://pyenv.run | bash
+
+Añadir en el .zshrc ->
+
+    export PATH="$HOME/.pyenv/bin:$PATH"
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+
+Añadir python con varias versions
+
+    pyenv install 3.6-dev
+    pyenv install 3.7-dev
+    pyenv install 3.8-dev
+
+#
+
 # Instalar python 3.7
 sudo apt update
 
