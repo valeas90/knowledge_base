@@ -45,6 +45,69 @@ su - ${USER}
 
 id -nG
 
+# Instalar docker-compose
+sudo apt install docker-compose
+
+# Instalar asdf (<https://github.com/asdf-vm/asdf>)
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.7.8
+
+cd /home/<name>/.asdf
+
+git checkout "$(git describe --abbrev=0 --tags)"
+
+Add to .zshrc
+
+. $HOME/.asdf/asdf.sh
+
+# Actualizar asdf
+asdf update
+
+# Añadir elixir con asdf (<https://github.com/asdf-vm/asdf-elixir>)
+asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
+
+# Instalar elixir con asdf
+asdf install elixir 1.8.1
+
+# Hacer global esa version de elixir
+asdf global elixir 1.8.1
+
+# Añadir nodejs con asdf (<https://github.com/asdf-vm/asdf-nodejs>)
+asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+
+# Importar clave de desarrolladores de node
+bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
+
+# Consultar plugins instalados
+asdf plugin list
+
+# Instalar nodejs 10 con asdf
+asdf install nodejs 10.13.0
+
+# Hacer global esa version de nodejs
+asdf global nodejs 10.13.0
+
+# Consultar versiones instaladas (<https://asdf-vm.com/#/core-manage-versions>)
+asdf current
+
+# Añadir python asdf (<https://github.com/danhper/asdf-python>)
+asdf plugin-add python
+
+# Instalar python 3.X con asdf. Si no hace el build visitar (<https://github.com/pyenv/pyenv/wiki/Common-build-problems>)
+asdf install python 3.8-dev
+asdf install python 3.7-dev
+asdf install python 3.6-dev
+
+# Hacer global esa version de python
+asdf global python 3.8-dev
+
+# Arreglar los builds de python
+sudo apt-get install -y build-essential libssl-dev zlib1g-dev libbz2-dev \
+libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+
+# Mostrar versiones disponibles con asdf
+asdf list all <name>
+
 # Instalar pyenv (omitir entonces el resto de secciones inferiores)
 sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
 libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
