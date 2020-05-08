@@ -71,6 +71,19 @@ asdf install elixir 1.8.1
 # Hacer global esa version de elixir
 asdf global elixir 1.8.1
 
+# Pasos previos para instalar erlang (<https://github.com/asdf-vm/asdf-erlang>)
+apt-get -y install autoconf
+
+# Añadir erlang con asdf
+asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
+
+# Instalar erlang con asdf
+asdf install erlang ref:master
+asdf install erlang 22.3.3
+
+# Hacer global esa version de erlang
+asdf global erlang 22.3.3
+
 # Añadir nodejs con asdf (<https://github.com/asdf-vm/asdf-nodejs>)
 asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 
