@@ -1,132 +1,231 @@
-# Instalar guake
-git clone https://github.com/Guake/guake.git
+# List of commands to prepare my dev environment
 
-cd guake
+## Instalar guake
 
-./scripts/bootstrap-dev-debian.sh run make
+    git clone https://github.com/Guake/guake.git
 
-make
+    cd guake
 
-sudo make install
+    ./scripts/bootstrap-dev-debian.sh run make
 
-((guake)&)
+    make
 
-# Instalar ZSH
-sudo apt-get install zsh curl git
+    sudo make install
 
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    ((guake)&)
 
-# Hacer ZSH shell por defecto
-chsh -s $(which zsh)
+## Instalar ZSH
+
+    sudo apt-get install zsh curl git
+
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+## Hacer ZSH shell por defecto
+
+    chsh -s $(which zsh)
 
 Y luego cerrar sesión
 
-# Instalar Visual Studio Code
-mv Descargas/code_1.37.1-1565886362_amd64.deb applications/.
+## Instalar Visual Studio Code
 
-sudo dpkg -i code_1.37.1-1565886362_amd64.deb
+    sudo snap install code --classic
 
-# Instalar Docker
-sudo apt install apt-transport-https ca-certificates curl software-properties-common
+## Configurar Visual Studio Code
 
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+En >json settings
 
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+    {
+        "python.linting.pylintEnabled": true,
+        "python.linting.flake8Enabled": true,
+        "python.linting.pydocstyleEnabled": true,
+        "python.linting.enabled": true,
+        "editor.formatOnSave": false,
+        "python.formatting.provider": "yapf",
+        "files.autoSave": "onWindowChange",
+        "editor.detectIndentation": false,
+        "editor.rulers": [
+            120
+        ],
+        "window.zoomLevel": 0,
+        "window.newWindowDimensions": "maximized",
+        "markdown-pdf.displayHeaderFooter": false,
+        "editor.suggestSelection": "first",
+        "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
+    }
 
-apt-cache policy docker-ce
+En >keybinding.json
 
-sudo apt install docker-ce
+    // Place your key bindings in this file to override the defaults
+    [
+        {
+            "key": "shift+alt+down",
+            "command": "editor.action.insertCursorBelow",
+            "when": "editorTextFocus"
+        },
+        {
+            "key": "shift+alt+up",
+            "command": "editor.action.insertCursorAbove",
+            "when": "editorTextFocus"
+        },
+        {
+            "key": "ctrl+shift+down",
+            "command": "editor.foldRecursively",
+            "when": "editorTextFocus && foldingEnabled"
+        },
+        {
+            "key": "ctrl+shift+up",
+            "command": "editor.unfoldRecursively",
+            "when": "editorTextFocus && foldingEnabled"
+        },
+    ]
 
-sudo systemctl status docker
+## Mostrar extensiones instaladas
 
-sudo usermod -aG docker ${USER}
+    code --list-extensions | xargs -L 1 echo code --install-extension
 
-su - ${USER}
+## Instalar extensiones
 
-id -nG
+    code --install-extension Arjun.swagger-viewer
+    code --install-extension bradymholt.pgformatter
+    code --install-extension DmitryDorofeev.empty-indent
+    code --install-extension donjayamanne.githistory
+    code --install-extension eamodio.gitlens
+    code --install-extension himanoa.Python-autopep8
+    code --install-extension hyesun.py-paste-indent
+    code --install-extension luyizhi.vscode-graphql
+    code --install-extension magicstack.MagicPython
+    code --install-extension ms-python.python
+    code --install-extension octref.vetur
+    code --install-extension redhat.vscode-xml
+    code --install-extension rokoroku.vscode-theme-darcula
 
-# Instalar docker-compose
-sudo apt install docker-compose
+## Instalar Docker
 
-# Instalar asdf (<https://github.com/asdf-vm/asdf>)
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.7.8
+    sudo apt install apt-transport-https ca-certificates curl software-properties-common
 
-cd /home/<name>/.asdf
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
-git checkout "$(git describe --abbrev=0 --tags)"
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+
+    apt-cache policy docker-ce
+
+    sudo apt install docker-ce
+
+    sudo systemctl status docker
+
+    sudo usermod -aG docker ${USER}
+
+    su - ${USER}
+
+    id -nG
+
+## Instalar docker-compose
+
+    sudo apt install docker-compose
+
+## Instalar asdf (<https://github.com/asdf-vm/asdf>)
+
+    git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.7.8
+
+    cd /home/<name>/.asdf
+
+    git checkout "$(git describe --abbrev=0 --tags)"
 
 Add to .zshrc
 
-. $HOME/.asdf/asdf.sh
+    . $HOME/.asdf/asdf.sh
 
-# Actualizar asdf
-asdf update
+## Actualizar asdf
 
-# Añadir elixir con asdf (<https://github.com/asdf-vm/asdf-elixir>)
-asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
+    asdf update
 
-# Instalar elixir con asdf
-asdf install elixir 1.8.1
+## Añadir elixir con asdf (<https://github.com/asdf-vm/asdf-elixir>)
 
-# Hacer global esa version de elixir
-asdf global elixir 1.8.1
+    asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
 
-# Pasos previos para instalar erlang (<https://github.com/asdf-vm/asdf-erlang>)
-apt-get -y install autoconf
+## Instalar elixir con asdf
 
-# Añadir erlang con asdf
-asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
+    asdf install elixir 1.8.1
 
-# Instalar erlang con asdf
-asdf install erlang ref:master
-asdf install erlang 22.3.3
+## Hacer global esa version de elixir
 
-# Hacer global esa version de erlang
-asdf global erlang 22.3.3
+    asdf global elixir 1.8.1
 
-# Añadir nodejs con asdf (<https://github.com/asdf-vm/asdf-nodejs>)
-asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+## Pasos previos para instalar erlang (<https://github.com/asdf-vm/asdf-erlang>)
 
-# Importar clave de desarrolladores de node
-bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
+    apt-get -y install autoconf
 
-# Consultar plugins instalados
-asdf plugin list
+## Añadir erlang con asdf
 
-# Instalar nodejs 10 con asdf
-asdf install nodejs 10.13.0
+    asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
 
-# Hacer global esa version de nodejs
-asdf global nodejs 10.13.0
+## Instalar erlang con asdf
 
-# Consultar versiones instaladas (<https://asdf-vm.com/#/core-manage-versions>)
-asdf current
+    asdf install erlang ref:master
 
-# Añadir python asdf (<https://github.com/danhper/asdf-python>)
-asdf plugin-add python
+    asdf install erlang 22.3.3
 
-# Instalar python 3.X con asdf. Si no hace el build visitar (<https://github.com/pyenv/pyenv/wiki/Common-build-problems>)
-asdf install python 3.8-dev
-asdf install python 3.7-dev
-asdf install python 3.6-dev
+## Hacer global esa version de erlang
 
-# Hacer global esa version de python
-asdf global python 3.8-dev
+    asdf global erlang 22.3.3
 
-# Arreglar los builds de python
-sudo apt-get install -y build-essential libssl-dev zlib1g-dev libbz2-dev \
-libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
-xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+## Añadir nodejs con asdf (<https://github.com/asdf-vm/asdf-nodejs>)
 
-# Mostrar versiones disponibles con asdf
-asdf list all <name>
+    asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 
-# Instalar pyenv (omitir entonces el resto de secciones inferiores)
-sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
-libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
-xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+## Importar clave de desarrolladores de node
 
-curl https://pyenv.run | bash
+    bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
+
+## Consultar plugins instalados
+
+    asdf plugin list
+
+## Instalar nodejs 10 con asdf
+
+    asdf install nodejs 10.13.0
+
+## Hacer global esa version de nodejs
+
+    asdf global nodejs 10.13.0
+
+## Consultar versiones instaladas (<https://asdf-vm.com/#/core-manage-versions>)
+
+    asdf current
+
+## Añadir python asdf (<https://github.com/danhper/asdf-python>)
+
+    asdf plugin-add python
+
+## Instalar python 3.X con asdf. Si no hace el build visitar (<https://github.com/pyenv/pyenv/wiki/Common-build-problems>)
+
+    asdf install python 3.8-dev
+
+    asdf install python 3.7-dev
+
+    asdf install python 3.6-dev
+
+## Hacer global esa version de python
+
+    asdf global python 3.8-dev
+
+## Arreglar los builds de python
+
+    sudo apt-get install -y build-essential libssl-dev zlib1g-dev libbz2-dev \
+    libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+    xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+
+## Mostrar versiones disponibles con asdf
+
+    asdf list all <name>
+
+## Instalar pyenv (omitir entonces el resto de secciones inferiores)
+
+    sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
+    libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+    xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+
+    curl https://pyenv.run | bash
 
 Añadir en el .zshrc ->
 
@@ -140,29 +239,32 @@ Añadir python con varias versions
     pyenv install 3.7-dev
     pyenv install 3.8-dev
 
-#
+## Instalar python 3.7
 
-# Instalar python 3.7
-sudo apt update
+    sudo apt update
 
-sudo apt install software-properties-common
+    sudo apt install software-properties-common
 
-sudo add-apt-repository ppa:deadsnakes/ppa
+    sudo add-apt-repository ppa:deadsnakes/ppa
 
-sudo apt install python3.7
+    sudo apt install python3.7
 
-# Hacer python 3.7 el python predeterminado
-sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1
+## Hacer python 3.7 el python predeterminado
 
-# Desinstalar poetry si esta fallando
-curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | POETRY_UNINSTALL=1 python
+    sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1
 
-# Instalar poetry
-sudo apt install python3.7-venv
+## Desinstalar poetry si esta fallando
 
-curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+    curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | POETRY_UNINSTALL=1 python
 
-# Instalar pip (opcional)
-python3.7 -m pip install pip
+## Instalar poetry
 
-sudo update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+    sudo apt install python3.7-venv
+
+    curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+
+## Instalar pip (opcional)
+
+    python3.7 -m pip install pip
+
+    sudo update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
